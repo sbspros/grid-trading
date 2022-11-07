@@ -20,4 +20,4 @@ class BinanceTicker():
                     return(tick)
         except:
             self._bc.log.error("\t"+":"+traceback.format_exc())
-            raise OrderbookFailed()           
+            raise TickerFailed()           
