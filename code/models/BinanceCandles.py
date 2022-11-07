@@ -5,7 +5,7 @@ import os
 
 class CandleStickFailed(Exception):
     def __init__(self):
-        self.msg = 'Count not connect to candle sticks.'
+        self.msg = 'Could not connect to candle sticks.'
         super().__init__(self.msg)  
         
 class BinanceCandles():
