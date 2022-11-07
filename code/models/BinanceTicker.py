@@ -5,7 +5,7 @@ import os
 
 class TickerFailed(Exception):
     def __init__(self):
-        self.msg = 'Count not connect to order book.'
+        self.msg = 'Could not get a ticker.'
         super().__init__(self.msg)  
         
 class BinanceTicker():
