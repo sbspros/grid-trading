@@ -6,7 +6,7 @@ import traceback
 
 class SchTrade():
     def __init__(self,bc:BaseClass,conn:BinanceConnection,\
-        war_chess,price,additional_orders,step_amount,qty_amount):
+        war_chess,price,additional_orders,step_amount,qty_amount,upper_limit,lower_limit):
         self._bc=bc
         self._conn=conn
         self._war_chess=war_chess
@@ -15,12 +15,11 @@ class SchTrade():
         self._ticker=BinanceTicker(self._bc,self._conn)
         self._step_amount=step_amount
         self._qty_amount=qty_amount
+        self._upper_limit=upper_limit
+        self.lower_limit=lower_limit
 
     def check_for_trade(self):
         prices=self._ticker.ticker("SOLUSDT")
-        #self._bc.log.error("Checking for a trade for price {price}".format(price=prices['bidPrice']))
-        ##self._bc.log.info("Do we have a by at prices between {lower} and {upper}".format\
-        ##    (lower=float(prices['bidPrice'])-2*self._step_amount,upper=prices['bidPrice']))
         self.create_buy_order(float(prices['bidPrice']),float(prices['bidPrice'])-2*self._step_amount)
         self.check_for_buy(float(prices['bidPrice']))
         

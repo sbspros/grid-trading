@@ -32,6 +32,7 @@ class TradeSetup():
         ## Get how much crypto cash I have
         account=BinanceAssetBalance(self._bc,self._conn)
         asset=account.asset_balance(self._base_pair)
+        print(asset)
         self._free_asset=asset[TradeSetup.free]
         
         #Get open orders
