@@ -1,5 +1,6 @@
 from common.BaseClass import BaseClass,AppException
 from models.BinanceConnection import BinanceConnection,BinanceConnectionFailed
+from models.BinanceOrderbook import BinanceOrderbook
 from objects.GridPairs import GridPairs
 import traceback
 from time import time, sleep
@@ -19,6 +20,8 @@ if __name__ == "__main__":
     try:
         ## Try to connect to the Binace Server
         connection=BinanceConnection(bc)
+	## Get all open orders
+	orderbook=BinanceOrderbook(self._bc,self._conn)
         with open('yaml/starting.yaml', 'r') as file:
             trades = yaml.safe_load(file) 
   
@@ -31,7 +34,7 @@ if __name__ == "__main__":
                 trade['InvestAmount'],\
                 trade['UpperLimit'],trade['LowerLimit'],\
                 trade['PriceStep'],trade['BayAmount']))
-	    pairs[-1].get_open_orders
+	    pairs[-1].get_open_orders(orderbook)
 	while True:
 	    for grid_pair in pairs:
 		grid_pair.reconciliation()
