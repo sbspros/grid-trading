@@ -1,6 +1,7 @@
 from common.BaseClass import BaseClass
 from models.BinanceConnection import BinanceConnection
-
+from models.BinanceTicker import BinanceTicker
+from models.BinanceBuyOrder import BinanceBuyOrder
 
 
 
@@ -31,52 +32,31 @@ class GridPairs():
     ## used to get the existing order for the api_symbol
     def get_existing_order(self):
         self._bc.log.error("\t Inside get existing orders")
-        pass
-    
-    ## gets current price and loops to see if there are existing orders
-    ## if not, it creates one
-    def create_order(self):
-        self._bc.log.error("\t Creates order if needed")
-        pass
+	for order in orders:
+            if order[‘symbol’]==self.api_symbol:
+                order[‘status’]=‘live’
+                self._open_orders.append(order)
+       
     
     ## Removes orders than have been sold.
-    def remove_order(self):
-        self._bc.log.error("\t Creates order if needed")
-        pass
-    
-    """ 
-def get_open_orders(self,orders):
-	## the main controller gets open orders and pass it into method
-	## it reduces the calls to Binance and speeds up the process
-	- for order in orders:
-		-order[‘status’]=‘live’
-		-if order[‘symbol’]==self.api_symbol:
-			-self._open_orders.append(order)
-
--def reconcyle_orders
-	-ticket_price=Ticker(self.api_symbol)
-	-list_len=len(self._open_orders)
-	-## add sort logic here from high to low
-	- found_order=False
-	-for i in range(0,list_len):
-		-if ticker_price >self._open_orders[i][‘buy_price’] and \
-			-self._open_order[i][‘staus’]==‘live’:
-			self._open_orders[i][‘status’]=‘sold’
-		If i>0 and self._open_orders[i][‘price’]>=ticker_price and \
-			-self._open_orders[i-1]<= ticker_price:
-			-found_order=True
-	-if not found_order and self._investment_amount >self._buy_amount*ticker_price :
+    def reconciliation(self):
+        self._bc.log.error("\t reconciliation order")
+	ticket_price=Ticker(self.api_symbol)
+	list_len=len(self._open_orders)
+	## add sort logic here from high to low
+	found_order=False
+	for i in range(0,list_len):
+	    if ticker_price >self._open_orders[i][‘buy_price’] and \
+                self._open_order[i][‘staus’]==‘live’:
+		self._open_orders[i][‘status’]=‘sold’
+            if i>0 and self._open_orders[i][‘price’]>=ticker_price and \
+	        self._open_orders[i-1]<= ticker_price:
+		found_order=True
+            if not found_order and self._investment_amount >self._buy_amount*ticker_price :
 		## the BinanceBuyOrder will have a flag for calling the test system buy and live buys
-		-self._open_order.append(BinanceBuyOrder(\
-			-self.api_symbol,self._step_amount,self._buy_amount*ticker_price)
+		self._open_order.append(BinanceBuyOrder(\
+			self.api_symbol,self._step_amount,self._buy_amount*ticker_price)
 
-This simplifies the main controller into something like
-	# after reading the yaml file
-	For grid_pair in grid_pairs:
-		grid_pair.get_orders()
-	While true
-		For grid_pair in grid_pairs:
-			grid_pair.reconcycle _order()
-		wait 60 seconds """
+
     
     
