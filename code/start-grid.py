@@ -39,13 +39,19 @@ if __name__ == "__main__":
                 trade['InvestAmount'],\
                 trade['UpperLimit'],trade['LowerLimit'],\
                 trade['PriceStep'],trade['BayAmount']))
+	    pairs[-1].get_open_orders
+	     
             
         x=1
         while x<100:
             for trade_grid in pairs:
                 trade_grid.create_order()
             x=x+1
-        # while True:
+
+	
+	
+        while True:
+	
         #     sleep(60 - time() % 60)
 	    #     # thing to run
         #     trading.check_for_trade()
