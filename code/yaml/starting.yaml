@@ -1,0 +1,26 @@
+Trades:
+    -
+        Token: "SOL"
+        BaseCur: USDT
+        InvestAmount: 300.0
+        UpperLimit: 35.0
+        LowerLimit: 20.9
+        PriceStep: 0.3
+        BayAmount: 0.62
+    -
+        Token: "ADA"
+        BaseCur: USDT
+        InvestAmount: 300.0
+        UpperLimit: 0.43
+        LowerLimit: 0.20
+        PriceStep: 0.03
+        BayAmount: 10       
+        
+    -
+        Token: "ZIL"
+        BaseCur: USDT
+        InvestAmount: 300.0
+        UpperLimit: 0.04
+        LowerLimit: 0.02
+        PriceStep: 0.03
+        BayAmount: 100    
