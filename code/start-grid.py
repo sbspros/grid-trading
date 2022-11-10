@@ -24,7 +24,8 @@ if __name__ == "__main__":
 	orderbook=BinanceOrderbook(self._bc,self._conn)
         with open('yaml/starting.yaml', 'r') as file:
             trades = yaml.safe_load(file) 
-  
+        ## not using BinanceAccountInfo, why not
+	## how are we getting the USDT value?
         pairs=[]
         for trade in trades['Trades']:
             print(trade)
