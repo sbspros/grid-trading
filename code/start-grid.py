@@ -1,6 +1,8 @@
 from common.BaseClass import BaseClass,AppException
 from models.BinanceConnection import BinanceConnection,BinanceConnectionFailed
 from models.BinanceOrderbook import BinanceOrderbook
+from models.BinanceAccountInfo import BinanceAccountInfo, AccountInfoFailed
+from models.BinanceAssetBalance import BinanceAssetBalance,AssetBalanceFailed
 from objects.GridPairs import GridPairs
 import traceback
 from time import time, sleep
@@ -20,12 +22,17 @@ if __name__ == "__main__":
     try:
         ## Try to connect to the Binace Server
         connection=BinanceConnection(bc)
+
+	## How much money do I have to spend
+	account_balance=BinanceAssetBalance()
+	war_chest=account_balance.asset_balance('USDT')
+	
 	## Get all open orders
 	orderbook=BinanceOrderbook(self._bc,self._conn)
         with open('yaml/starting.yaml', 'r') as file:
-            trades = yaml.safe_load(file) 
+            trades = yaml.safe_load(file)
+	
         ## not using BinanceAccountInfo, why not
-	## how are we getting the USDT value?
         pairs=[]
         for trade in trades['Trades']:
             print(trade)
