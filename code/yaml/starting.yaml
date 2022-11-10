@@ -1,3 +1,6 @@
+Logs:
+    FileName: "logs/log.txt"
+    LogLevel: "40"
 Trades:
     -
         Token: "SOL"
