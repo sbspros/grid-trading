@@ -11,10 +11,12 @@ class TestTradeFailed(Exception):
         super().__init__(self.msg)  
         
 class BinanceTestTrade():
-
-    def __init__(self,bc:BaseClass,conn:BinanceConnection):
+    
+    def __init__(self,bc:BaseClass,conn:BinanceConnection,run_mode:str):
         self._bc=bc
         self._conn=conn
+        if run_mode!='Test':
+            raise "Wrong run level"
 
     def candle_stick(self,symbol:str,side:str,order_type:str,time_forced:str,qyt:float,price:float):
         try:
