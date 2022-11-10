@@ -18,7 +18,7 @@ class BinanceTestTrade():
         if run_mode!='Test':
             raise "Wrong run level"
 
-    def candle_stick(self,symbol:str,side:str,order_type:str,time_forced:str,qyt:float,price:float):
+    def trade(self,symbol:str,side:str,order_type:str,time_forced:str,qyt:float,price:float):
         try:
             return self._conn._client.client.create_test_order(
               symbol=symbol,
