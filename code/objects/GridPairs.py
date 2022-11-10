@@ -1,11 +1,13 @@
 from common.BaseClass import BaseClass
 from models.BinanceConnection import BinanceConnection
 from models.BinanceTicker import BinanceTicker
-from models.BinanceBuyOrder import BinanceBuyOrder
+from models.BinanceTrade import BinanceTrade,TradeFailed
+from binance.client.Client import SIDE_BUY,SIDE_SELL,ORDER_TYPE_LIMIT,TIME_IN_FORCE_FOK
 
 
 
 class GridPairs():
+    run_mode='Test'
     def __init__(self,bc:BaseClass,\
             conn:BinanceConnection,\
             token:str,base_cur:str,\
@@ -25,6 +27,7 @@ class GridPairs():
         self._lower_limit=lower_limit
         self._price_steps=price_steps
         self._buy_amount=buy_amount
+	self._trade=BinanceTrade(self._bc,self._conn)
     
     @property    
     def api_symbol(self):return self._api_symbol
@@ -33,8 +36,8 @@ class GridPairs():
     def get_existing_order(self):
         self._bc.log.error("\t Inside get existing orders")
 	for order in orders:
-            if order[‘symbol’]==self.api_symbol:
-                order[‘status’]=‘live’
+            if order['symbol']==self.api_symbol:
+                order['status']=‘live’
                 self._open_orders.append(order)
        
     
@@ -47,15 +50,15 @@ class GridPairs():
 	found_order=False
 	for i in range(0,list_len):
 	    if ticker_price >self._open_orders[i][‘buy_price’] and \
-                self._open_order[i][‘staus’]==‘live’:
-		self._open_orders[i][‘status’]=‘sold’
+                self._open_order[i][‘staus’]=='live':
+		self._open_orders[i][‘status’]='sold'
             if i>0 and self._open_orders[i][‘price’]>=ticker_price and \
 	        self._open_orders[i-1]<= ticker_price:
 		found_order=True
             if not found_order and self._investment_amount >self._buy_amount*ticker_price :
 		## the BinanceBuyOrder will have a flag for calling the test system buy and live buys
-		self._open_order.append(BinanceBuyOrder(\
-			self.api_symbol,self._step_amount,self._buy_amount*ticker_price)
+		self._open_order.append(self._trade(\
+			self.api_symbol,SIDE_BUY,ORDER_TYPE_LIMIT,TIME_IN_FORCE_FOK,self._buy_amount*ticker_price,ticker_price-self._price_step)
 
 
     
