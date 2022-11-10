@@ -1,0 +1,30 @@
+from common.BaseClass import BaseClass
+from models.BinanceConnection import BinanceConnection
+import traceback
+
+
+import os
+
+class TestTradeFailed(Exception):
+    def __init__(self):
+        self.msg = 'Could not place test trade.'
+        super().__init__(self.msg)  
+        
+class BinanceTestTrade():
+
+    def __init__(self,bc:BaseClass,conn:BinanceConnection):
+        self._bc=bc
+        self._conn=conn
+
+    def candle_stick(self,symbol:str,side:str,order_type:str,time_forced:str,qyt:float,price:float):
+        try:
+            return self._conn._client.client.create_test_order(
+              symbol=symbol,
+              side=side,
+              type=order_type,
+              timeInForce=time_forced,
+              quantity=qty,
+              price=price)
+        except:
+            self._bc.log.error("\t"+":"+traceback.format_exc())
+            raise TestTradeFailed() 
