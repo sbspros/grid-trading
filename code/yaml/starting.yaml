@@ -1,29 +1,40 @@
 Logs:
-    FileName: "logs/log.txt"
-    LogLevel: "40"
+    FileName: "logs/log.log"
+    LogLevel: "10"
 Trades:
     -
-        Token: "SOL"
-        BaseCur: USDT
-        InvestAmount: 300.0
-        UpperLimit: 35.0
-        LowerLimit: 20.9
-        PriceStep: 0.3
-        BayAmount: 0.62
-    -
         Token: "ADA"
-        BaseCur: USDT
-        InvestAmount: 300.0
-        UpperLimit: 0.43
-        LowerLimit: 0.20
-        PriceStep: 0.03
-        BayAmount: 10       
-        
+        SymbolPair:
+        -
+            BaseCur: "USDT"
+            BaseAmount: 200.00
+            TokenAmount: 1400.00          
+            TokenStartPrice: 0.345
+            UpperLimit: 0.3398
+            LowerLimit: 0.3058
+            PriceStep: 0.00142
+            BuyAmount: 6.812
+            InvestAmount: 2100
+            MaxPendingDepth: 5
+            FileName: "data/ADAUSDT-1m-2022-11.csv"
+        -
+            BaseCur: "BUSD"
+            UpperLimit: 0.3398
+            LowerLimit: 0.3058
+            PriceStep: 0.00142
+            BuyAmount: 6.812
+            MaxPendingDepth: 5
+            InvestAmount: 2100
+            FileName: "data/ADAUSDT-1m-2022-11.csv"
     -
-        Token: "ZIL"
-        BaseCur: USDT
-        InvestAmount: 300.0
-        UpperLimit: 0.04
-        LowerLimit: 0.02
-        PriceStep: 0.03
-        BayAmount: 100    
+        Token: "SOL"
+        SymbolPair:
+        -
+            BaseCur: "USDT"
+            UpperLimit: 15.50
+            LowerLimit: 12.50
+            PriceStep: 0.06
+            BuyAmount: 3
+            MaxPendingDepth: 5
+            InvestAmount: 2100
+            FileName: "data/ADAUSDT-1m-2022-11.csv"

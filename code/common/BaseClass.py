@@ -1,4 +1,4 @@
-from common.Logging import Logging
+from common.Logging import Logging,LoggingException
 from common.IniReader import IniReader
 import platform
 
@@ -10,16 +10,15 @@ __maintainer__ = "Richard Chamberlain"
 __email__ = "richard@sbspros.ca"
 __status__ = "Dev"
 
-
 class AppException(Exception):
     def __init__(self):
         self.msg = 'Application has stopped, please check error logs'
         super().__init__(self.msg)
 
 class BaseClass:
-    """ 
-    This class sets up the logging and ini variables 
-    for other objects to use. It 
+    """
+    This class sets up the logging and ini variables
+    for other objects to use. It
         - Will have variable and methods needed by other objects
         - Load in the config file
         - Setup any logging
@@ -30,12 +29,13 @@ class BaseClass:
         self.line_feed='\n'
         if platform.platform()[0:7]=='Windows':
             self.line_feed='\r\n'
-            
+
         self.ini_file = IniReader(file_name)
         try:
             self.log = Logging(self.ini_file.config['logging']['fileName'],\
                 int(self.ini_file.config['logging']['logLevel']))
             self.log.info("\tStarting class "+self.__class__.__name__)
-            
+
         except LoggingException as err:
+            print("Here in error area")
             self._log_error=True

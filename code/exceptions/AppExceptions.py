@@ -13,7 +13,3 @@ class AppStartException(Exception):
         self.msg = 'Could not start app.'
         super().__init__(self.msg)
 
-class LoggingException(Exception):
-    def __init__(self):
-        self.msg = 'Could not start app.'
-        super().__init__(self.msg)

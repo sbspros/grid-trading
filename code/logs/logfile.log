@@ -1,0 +1,5 @@
+ 2022-12-06 20:26:37,865  	:Traceback (most recent call last):
+  File "/home/richard/sbspros/python/grid-trading/code/controllers/GridSchedule.py", line 48, in run_trades
+    trade_pair.reconcoliation(ticker)
+AttributeError: 'GridOrdersFile' object has no attribute 'reconcoliation'
+

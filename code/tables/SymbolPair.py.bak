@@ -1,0 +1,13 @@
+from dataclasses import dataclass, field
+
+@dataclass
+class SymbolPair():
+    _base_pair:str
+    _upper_limit:str
+    _lower_limit:str
+    _price_step:str
+    _buy_amount:str
+    _pending_depth:int=field(init=False,default=0)
+    _max_pending_depth:int
+
+
