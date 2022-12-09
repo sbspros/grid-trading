@@ -31,21 +31,22 @@ class GridSchedule(ABC):
             with open(yaml_file,'r') as file:
                 trade=yaml.safe_load(file)
                 for token in trade['Trades']:
-                    self._bc.log.info("setting up trading for {token}".format(token=token['Token']))
+                    #self._bc.log.info("setting up trading for {token}".format(token=token['Token']))
                     for trade_pair in token['SymbolPair']:
-                        self._bc.log.info("Trading Pair is {pair}".format(pair=token['Token']+trade_pair['BaseCur']))
-                        trade_symbol=TradeSymbol().parse_data(token,trade_pair)
+                        #self._bc.log.error("Trading Pair is {pair}".format(pair=token['Token']+trade_pair['BaseCur']))
+                        trade_symbol=TradeSymbol()
+                        trade_symbol.parse_data(token,trade_pair)
                         self.setup_grid_orders(trade_symbol)
         except:
             raise YamlFailure()
 
-    def run_trades(self):
+    def run_trades2(self):
         counter=0
         try:
             while True:
                 for trade_pair in self._orders:
                     ticker=self.ticker()
-                    trade_pair.reconcoliation(ticker)
+                    trade_pair.reconciliation(ticker)
                     last_ticker=ticker
                 counter+=1
                 if counter >100:

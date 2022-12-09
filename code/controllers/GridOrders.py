@@ -10,6 +10,7 @@ class GridOrders(ABC):
             symbol_info:TradeSymbol,\
             )->None:
         self._bc=bc
+        self._bc.log.error(str(symbol_info))
         self._symbol_info=symbol_info
         self._orders=[]
     
@@ -46,7 +47,10 @@ class GridOrders(ABC):
 
 
     def reconciliation(self,ticker:Ticker):
-        if self.symbol_info._lower_limit> ticker._high_price and  \
+        self._bc.log.error(str(self._symbol_info))
+        if self._symbol_info==None:
+            return
+        if self._symbol_info._lower_limit> ticker._high_price and  \
                 self._symbol_info.upper_limit < ticker._low_price:
                     return
         found_order=False

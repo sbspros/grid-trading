@@ -11,6 +11,7 @@ class TradeSymbol():
     _lower_limit:str=field(init=False)
     _price_step:str=field(init=False)
     _buy_amount:str=field(init=False)
+    _file_name:str=field(init=False)
     _pending_depth:int=field(init=False,default=0)
     _max_pending_depth:int=0
     _spent:float=0.0
@@ -37,6 +38,7 @@ class TradeSymbol():
             self._symbol_info._tokens-=self._symbol_info._buy_amount
     
     def investment_summary(selfi,last_ticker):
+        self._bc.log.error(trade_pair._)
         self._bc.log.info("")
         self._bc.log.info("Total float cash \t\t${float_cash:6.3f}".format(float_cash=self._war_chest))
         self._bc.log.info("Pending order return \t${return_amount:6.3f}".format(return_amount=self._return_amount))
