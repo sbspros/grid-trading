@@ -13,36 +13,46 @@ class TradeSymbol():
     _buy_amount:str=field(init=False)
     _file_name:str=field(init=False)
     _pending_depth:int=field(init=False,default=0)
+    _symbol:str=field(init=False)
     _max_pending_depth:int=0
     _spent:float=0.0
     _tokens:float=0.0
     _war_chest:float=0.0
     _return_amount:float=0.0
+    _total_profit:float=0.0
+
+    @property
+    def lower_limit(self):return float(self._lower_limit)
+
+    @property
+    def upper_limit(self):return float(self._upper_limit)
+
 
     def parse_data(self,symbol,trade_info)->None:
         self._token=symbol['Token']
         self._invest_amount=trade_info['InvestAmount']
         self._war_chest=float(trade_info['InvestAmount'])
         self._base_pair=trade_info['BaseCur'],
-        self._upper_limit=trade_info['UpperLimit'],
-        self._lower_limit=trade_info['LowerLimit'],
-        self._price_step=trade_info['PriceStep'],
-        self._buy_amount=trade_info['BuyAmount'],
+        self._symbol=str(self._token)+str(self._base_pair)
+        self._upper_limit=trade_info['UpperLimit']
+        self._lower_limit=trade_info['LowerLimit']
+        self._price_step=trade_info['PriceStep']
+        self._buy_amount=trade_info['BuyAmount']
         self._max_pending_depth=int(trade_info['MaxPendingDepth'])
         self._file_name=trade_info['FileName']
 
-    def update_total(selfi,profit,action_cost,action):
-        self._symbol_info.total_profit+=profit
-        if action==Sell:
-            self._symbol_info._war_chest+=action_value
-            self._symbol_info._tokens-=self._symbol_info._buy_amount
+    def update_totals(self,profit,action_cost,action):
+        self._total_profit+=profit
+        if action=='Sell':
+            self._war_chest+=action_cost
+            self._tokens-=self._buy_amount
     
-    def investment_summary(selfi,last_ticker):
-        self._bc.log.error(trade_pair._)
-        self._bc.log.info("")
-        self._bc.log.info("Total float cash \t\t${float_cash:6.3f}".format(float_cash=self._war_chest))
-        self._bc.log.info("Pending order return \t${return_amount:6.3f}".format(return_amount=self._return_amount))
-        self._bc.log.info("Tokens own \t\t\t{tokens:3.3f} (${close_price})".format(tokens=self._tokens,close_price=last_ticker._close_price))
-        self._bc.log.info("Investment value \t\t${cash:6.2f} ".format(\
-                                cash=self._return_amount+self._war_chest+\
-                                self._tokens*float(last_ticker._close_price)))
+    # def investment_summary(selfi,last_ticker):
+    #     self._bc.log.error(trade_pair._)
+    #     self._bc.log.info("")
+    #     self._bc.log.info("Total float cash \t\t${float_cash:6.3f}".format(float_cash=self._war_chest))
+    #     self._bc.log.info("Pending order return \t${return_amount:6.3f}".format(return_amount=self._return_amount))
+    #     self._bc.log.info("Tokens own \t\t\t{tokens:3.3f} (${close_price})".format(tokens=self._tokens,close_price=last_ticker._close_price))
+    #     self._bc.log.info("Investment value \t\t${cash:6.2f} ".format(\
+    #                             cash=self._return_amount+self._war_chest+\
+    #                             self._tokens*float(last_ticker._close_price)))

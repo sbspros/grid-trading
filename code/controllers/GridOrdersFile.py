@@ -2,13 +2,14 @@ from common.BaseClass import BaseClass
 from controllers.GridOrders import GridOrders
 from tables.Ticker import Ticker
 from tables.TradeSymbol import TradeSymbol
+from tables.GridOrder import GridOrder
 class GridOrdersFile(GridOrders):
     
     def __init__(self,bc:BaseClass,trade_symbol:TradeSymbol)->None:
         super().__init__(bc,trade_symbol)
 
     def new_order(self,ticker:Ticker):
-        new_order=GridFileOrder(ticker)
+        new_order=GridOrder(ticker)
         cost=new_order.add(ticker._symbol,ticker._close_price,\
                         (float(self._symbol_info._price_step)+float(ticker._close_price)),  \
                                 self._symbol_info._buy_amount)
@@ -20,7 +21,6 @@ class GridOrdersFile(GridOrders):
 
     def cancel_pending(self,last_ticker):
         return_amount=0.0
-        self._bc.log.error('inside cancel orders')
         num_of_orders=len(self._orders)
         if num_of_orders >=1:
             for order in range(0,num_of_orders):

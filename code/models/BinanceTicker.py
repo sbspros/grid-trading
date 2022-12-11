@@ -1,8 +1,4 @@
 from common.BaseClass import BaseClass
-from data_reader.CSVReader import CSVReader, CSVReadException,\
-    CSVOpenException
-from models.BinanceConnection import BinanceConnection
-from tables.TickerWeb import TickerWeb
 from tables.TickerFile import TickerFile
 import traceback
 import os
@@ -17,7 +13,7 @@ class EndOfTickers(Exception):
         self.msg = 'Could not get a ticker.'
         super().__init__(self.msg)
 
-class BinanceTicker():
+class BinanaceTickerFile(BinanaceTicker):
     def __init__(self,bc:BaseClass,conn:BinanceConnection,symbol:str,file_name:str=None):
         self._bc=bc
         self._conn=conn

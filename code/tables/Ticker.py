@@ -24,3 +24,11 @@ class Ticker():
         else:
             return False
 
+    @property
+    def high_price(self): 
+        print(self._high_price)
+        return self._high_price
+
+
+    @property
+    def low_price(self): return self._low_price

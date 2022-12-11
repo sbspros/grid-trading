@@ -10,7 +10,6 @@ class GridOrders(ABC):
             symbol_info:TradeSymbol,\
             )->None:
         self._bc=bc
-        self._bc.log.error(str(symbol_info))
         self._symbol_info=symbol_info
         self._orders=[]
     
@@ -22,17 +21,17 @@ class GridOrders(ABC):
     def cancel_pending(self):
         pass
 
-    def sell(self):
+    def sell(self,order,ticker):
         values=self._orders[order].sell()
-        self._symbol_info.update_totals(float(values['profit']),value['return_amount'],'Sell')
+        self._symbol_info.update_totals(float(values['profit']),values['return_amount'],'Sell')
         self.log_action('Sell   ',self._orders[order],ticker,GridOrders.total_profit)
 
-    def buy(self):
+    def buy(self,order,ticker):
         self._orders[order].buy()
         self._symbol_info.update_totals(0.0,0.0,'Buy')
         self.log_action('Buy    ',self._orders[order],ticker,GridOrders.total_profit)
 
-    def found_order(self):
+    def found_order(self,order):
         found_order=True
 
     def cancel_pending_orders(self,last_ticker):
@@ -47,11 +46,10 @@ class GridOrders(ABC):
 
 
     def reconciliation(self,ticker:Ticker):
-        self._bc.log.error(str(self._symbol_info))
         if self._symbol_info==None:
             return
-        if self._symbol_info._lower_limit> ticker._high_price and  \
-                self._symbol_info.upper_limit < ticker._low_price:
+        if self._symbol_info._lower_limit> ticker.high_price and  \
+                self._symbol_info.upper_limit < ticker.low_price:
                     return
         found_order=False
         action='No Orders'
@@ -61,19 +59,18 @@ class GridOrders(ABC):
                 ## do we need a new buy order
                 action=self._orders[order].check_order(ticker)
                 if action=='Sell':
-                    self.sell()
+                    self.sell(order,ticker)
                 elif action=='Buy':
-                    self.buy()
+                    self.buy(order,ticker)
                 elif action=='Found':
                     found_order=True
-                    self.found_order()
-                    ## self.log_action('Found  ',self._orders[order],ticker,GridOrders.total_profit)
+                    self.found_order(order)
         if not found_order:
-            self.new_order()
+            self.new_order(ticker)
         return action
 
     def log_action(self,action:str,order:GridOrder,ticker:Ticker,total_profit:float)->None:
-        self._bc.log.debug("{uuid},{action:8s},{ticker_high:7.2f},{ticker_low:7.2f},{order_buy:7.2f},{order_sell:7.2f},{amount:5.2f},{status:8s},{profit:5.2f},{total_profit:5.2f},{tokens:8.3f},{war_chest:7.2f},{current:7.2f}"\
+        self._bc.log.info("{uuid},{action:8s},{ticker_high:7.2f},{ticker_low:7.2f},{order_buy:7.2f},{order_sell:7.2f},{amount:5.2f},{status:8s},{profit:5.2f},{total_profit:5.2f},{tokens:8.3f},{war_chest:7.2f},{current:7.2f}"\
                           .format(action=action,\
                                   ticker_high=float(ticker._high_price),\
                                   ticker_low=float(ticker._low_price),\

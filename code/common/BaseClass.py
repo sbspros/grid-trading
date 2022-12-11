@@ -25,7 +25,6 @@ class BaseClass:
 
     """
     def __init__(self,file_name):
-        #self._log_error=False
         self.line_feed='\n'
         if platform.platform()[0:7]=='Windows':
             self.line_feed='\r\n'

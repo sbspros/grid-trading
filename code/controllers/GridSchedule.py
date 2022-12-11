@@ -31,9 +31,7 @@ class GridSchedule(ABC):
             with open(yaml_file,'r') as file:
                 trade=yaml.safe_load(file)
                 for token in trade['Trades']:
-                    #self._bc.log.info("setting up trading for {token}".format(token=token['Token']))
                     for trade_pair in token['SymbolPair']:
-                        #self._bc.log.error("Trading Pair is {pair}".format(pair=token['Token']+trade_pair['BaseCur']))
                         trade_symbol=TradeSymbol()
                         trade_symbol.parse_data(token,trade_pair)
                         self.setup_grid_orders(trade_symbol)
@@ -58,8 +56,3 @@ class GridSchedule(ABC):
             self._bc.log.error('\t:'+traceback.format_exc())
         finally:
             pass
-            #pair.cancel_pending_orders(last_ticker)
-
-                    
-
-        self._orders=[]
